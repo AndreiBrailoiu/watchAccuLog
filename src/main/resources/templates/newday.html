@@ -1,0 +1,23 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>New Day Measurement</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css"
+	th:href="@{/css/bootstrap.min.css}" />
+</head>
+<body>
+	<h1>Insert your new measurement for the selected watch:</h1>
+	<form class="form-inline" th:object="${watch}" th:action="@{../watchsave}" action="#" method="post">
+		<label for="Date">Date</label>
+		<input class="form-control" type="date" id="start" th:field="*{start}"/>
+		<label for="Brand">Brand</label>
+		<input class="form-control" type="text" id="brand" th:field="*{brand}"/>
+		<label for="Caliber">Caliber</label>
+		<input class="form-control" type="text" id="caliber" th:field="*{caliber}"/>
+		<label for="Accuracy">Accuracy</label>
+		<input class="form-control" type="text" id="accuracy" th:field="*{accuracy}"/>	
+		<input type="submit" value="Add" class="btn btn-primary"></input>
+	</form>
+</body>
+</html>
