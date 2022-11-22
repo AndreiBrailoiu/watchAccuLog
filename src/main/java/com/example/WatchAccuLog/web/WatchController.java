@@ -1,6 +1,5 @@
 package com.example.WatchAccuLog.web;
 
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -74,16 +73,15 @@ public class WatchController {
 		return "newday";
 	}
 
-	/*
+	// collecting data for the graph
 	@RequestMapping(value = "/index")
-	public String index(Model model) {
-		Map<String, Integer> graphData = new TreeMap<>();
-		List<Watch> wList = (List<Watch>) wRepository.findAll();
-
-		for (int i = 0; i < wList.size(); i++) {
-			graphData.put(wList.get(i).getBrand(), graphData.get(wList.get(i).getBrand()) + wList.get(i).getAccuracy());
+	public String gChart(Model model) {
+		Map<String, Integer> chartData = new TreeMap<>();
+		for (Watch watch : wRepository.findAll()) {
+			chartData.put(watch.getBrand(), watch.getAccuracy());
 		}
-		model.addAttribute("graphData", graphData);
+		// model.addAttribute("watches", chartData);
+		model.addAttribute("watches", wRepository.findAll());
 		return "index";
-	}*/
+	}
 }

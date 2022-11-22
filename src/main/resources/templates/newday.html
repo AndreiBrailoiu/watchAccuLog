@@ -7,8 +7,8 @@
 	th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
-	<h1>Insert your new measurement for the selected watch:</h1>
-	<form class="form-inline" th:object="${watch}" th:action="@{../watchsave}" action="#" method="post">
+	<h2 style="text-align: center; background:darkcyan; color:white; padding:10px 20px;">Insert your new measurement for the selected watch:</h2>
+	<form class="form-inline" style="text-align: center; background:darkcyan; color:white; padding:10px 20px;" th:object="${watch}" th:action="@{../watchsave}" action="#" method="post">
 		<label for="Date">Date</label>
 		<input class="form-control" type="date" id="start" th:field="*{start}"/>
 		<label for="Brand">Brand</label>
