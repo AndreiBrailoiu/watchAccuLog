@@ -20,6 +20,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailServiceImpl userDetailsService;
 
+	// enabling global CSS usage;
+	// overriding default login page with custom implementation;
+	// on successful authentication present main page;
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/css/**").permitAll() // Enable css when logged out

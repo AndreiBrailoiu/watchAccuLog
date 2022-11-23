@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
 <title>Watch Diary</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -8,16 +9,21 @@
 </head>
 <body>
 	<div class="form-group">
-	<h3 style="display:inline;">Logged in as: [[${#httpServletRequest.remoteUser}]]</h3>
-		<form style="display:inline;" th:action="@{/logout}" method="post">
-			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+		<h3 style="display: inline;">Logged in as:
+			[[${#httpServletRequest.remoteUser}]]</h3>
+		<form style="display: inline;" th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger" />
 		</form>
 	</div>
-	<h2 style="text-align: center; background:darkcyan; color:white; padding:10px 20px;">Daily watch accuracy logger<br>
-	<a class="btn btn-warning" onclick="infoAlert()">INFO</a>
-	<a href="/watchadd" class="btn btn-success">Add Watch</a>
-	<a href="/index" class="btn btn-info">Chart</a></h2>
-	<table class="table table-hover;">
+	<h2
+		style="text-align: center; background: darkcyan; color: white; padding: 10px 20px;">
+		Daily watch accuracy logger<br> <a class="btn btn-warning"
+			onclick="infoAlert()">INFO</a> <a href="/watchadd"
+			class="btn btn-success">Add Watch</a> <a href="/index"
+			class="btn btn-info">Chart</a> <a href="/watchdeleteall"
+			class="btn btn-danger" sec:authorize="hasAuthority('ADMIN')">Purge</a>
+	</h2>
+	<table class="table table-hover">
 		<tr style="background-color: #54585d; color: #ffffff;">
 			<th>Date</th>
 			<th>Maison</th>
@@ -28,19 +34,24 @@
 		</tr>
 		<tr th:each="watch : ${watches}">
 			<td th:text="${watch.start}"></td>
-			<td><img class="img-thumbnail" height="55" width="75" th:src="@{${'images/' + watch.brand + '.jpg'}}" alt="maison_logo"/></td>
+			<td><img class="img-thumbnail" height="55" width="75"
+				th:src="@{${'images/' + watch.brand + '.jpg'}}" alt="maison_logo" /></td>
 			<td th:text="${watch.brand}"></td>
 			<td th:text="${watch.caliber}"></td>
 			<td th:text="${watch.accuracy} + ' s/d'"></td>
-			<td><a class="btn btn-primary" th:href="@{/newday/{id}(id=${watch.id})}">+</a>
-			<a class="btn btn-danger" th:href="@{/watchdelete/{id}(id=${watch.id})}">-</a>
-			<a class="btn btn-warning" th:href="@{/watchdestroy/{id}(id=${watch.id})}"><img th:src="@{${'images/skull.jpg'}}" height="25" width="25" /></a></td>
+			<td><a class="btn btn-primary"
+				th:href="@{/newday/{id}(id=${watch.id})}">+</a> <a
+				class="btn btn-danger"
+				th:href="@{/watchdelete/{id}(id=${watch.id})}">-</a> <a
+				class="btn btn-warning"
+				th:href="@{/watchdestroy/{id}(id=${watch.id})}"><img
+					th:src="@{${'images/skull.jpg'}}" height="25" width="25" /></a></td>
 		</tr>
 	</table>
 </body>
 <script>
-        function infoAlert() {
-            alert("New watch adds a new watch to the collection.\n+ adds a new measurement for the selected watch.\n- removes the selected entry in case of wrong input values.\nThe skull removes the selected watch and all relative entries from table and db.");
-        }
-    </script>
+	function infoAlert() {
+		alert("New watch adds a new watch to the collection.\n+ adds a new measurement for the selected watch.\n- removes the selected entry in case of wrong input values.\nThe skull removes the selected watch and all relative entries from table and db.");
+	}
+</script>
 </html>

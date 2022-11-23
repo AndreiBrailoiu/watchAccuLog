@@ -1,15 +1,19 @@
 package com.example.WatchAccuLog.web;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.TreeMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.WatchAccuLog.model.Watch;
 import com.example.WatchAccuLog.model.WatchRepository;
@@ -54,6 +58,14 @@ public class WatchController {
 		return "redirect:../watchlist";
 	}
 
+	// delete all entries - admin restricted
+	@PreAuthorize("hasAuthority('ADMIN')")
+	@RequestMapping(value = "/watchdeleteall", method = RequestMethod.GET)
+	public String purge(Model model) {
+		wRepository.deleteAll();
+		return "watchlist";
+	}
+
 	// remove all entries related to the selected watch.
 	// transactional annotation handles the exeptions thrown when calling
 	// a method that deletes multiple rows.
@@ -83,5 +95,17 @@ public class WatchController {
 		// model.addAttribute("watches", chartData);
 		model.addAttribute("watches", wRepository.findAll());
 		return "index";
+	}
+
+	// RESTful service to showcase all watches currently saved in the DB;
+	@RequestMapping(value = "/watches", method = RequestMethod.GET)
+	public @ResponseBody List<Watch> bookListRest() {
+		return (List<Watch>) wRepository.findAll();
+	}
+
+	// RESTful service to see the selected watch (by ID);
+	@RequestMapping(value = "/watch/{id}", method = RequestMethod.GET)
+	public @ResponseBody Optional<Watch> findBookRest(@PathVariable("id") Long watchid) {
+		return wRepository.findById(watchid);
 	}
 }
